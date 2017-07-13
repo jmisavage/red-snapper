@@ -1,0 +1,25 @@
+{
+  "name": "red-snapper",
+  "version": "0.1.0",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:martinagency/red-snapper.git"
+  },
+  "engines": {
+    "node": ">=7"
+  },
+  "description": "Take a screenshot of a webpage using headless Chrome",
+  "main": "index.js",
+  "scripts": {},
+  "keywords": [
+    "chrome",
+    "screenshot",
+    "snapshot"
+  ],
+  "author": "Jeremy Misavage",
+  "license": "MIT",
+  "dependencies": {
+    "chrome-remote-interface": "^0.24.1",
+    "minimist": "^1.2.0"
+  }
+}
