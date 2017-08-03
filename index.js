@@ -78,12 +78,14 @@ module.exports = function (options) {
 
 			}); // Page.loadEventFired
 
-			setTimeout(async () => {
-				if(instance) {
-					instance.kill();
-				}
-				return true;
-			}, config.delay + 50);
+			if( config.autoLaunch ) {
+				setTimeout(async () => {
+					if(instance) {
+						instance.kill();
+					}
+					return true;
+				}, config.delay + 50);
+			}
 
 
 		}).on('error', (err) => {
