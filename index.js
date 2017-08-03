@@ -23,7 +23,8 @@ module.exports = function (options) {
 		instanceOptions: {
 			stdio: ['ignore', 'ignore', 'ignore'],
 			detached: true
-		}
+		},
+		autoLaunch: false
 	}, options);
 
 	// Check for Chrome
@@ -37,11 +38,11 @@ module.exports = function (options) {
 
 	exec(search, (error, stdout, stderr) => {
 		// test id the unix/posix process is running with headless
-		/*if( stdout.indexOf('--headless') < 0) {
-			// try to launch chrome
+		if( config.autoLaunch && stdout.indexOf('--headless') < 0 ) {
+			// try to auto launch chrome
 			instance = spawn(chrome, config.chromeOptions, config.instanceOptions);
 			instance.unref();
-		}*/
+		}
 
 		// Now let's take a screenshot
 		CDP(async (client) => {
