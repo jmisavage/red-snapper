@@ -1,13 +1,13 @@
-'use strict';
-
+const chromeLauncher = require('chrome-launcher');
 const CDP = require('chrome-remote-interface');
-const { exec, spawn } = require('child_process');
 const file = require('fs');
 
+function wait(ms) {
+	return new Promise(resolve => setTimeout(resolve, ms));
+}
+
 module.exports = function (options) {
-	let search,
-		chrome,
-		instance;
+
 	let config = Object.assign({
 		url: 'about:blank',
 		width: 1024,
@@ -17,79 +17,50 @@ module.exports = function (options) {
 		chromeOptions: [
 			'--headless',
             '--hide-scrollbars',
-            '--remote-debugging-port=9222',
             '--disable-gpu'
-		],
-		instanceOptions: {
-			stdio: ['ignore', 'ignore', 'ignore'],
-			detached: true
-		},
-		autoLaunch: false
+		]
 	}, options);
 
-	// Check for Chrome
-	if( process.platform === 'darwin') {
-		search = 'ps aux | grep "Google Chrome"';
-		chrome = '/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome';
-	} else {
-		search = 'ps aux | grep chrome';
-		chrome = 'google-chrome';
-	}
-
-	exec(search, (error, stdout, stderr) => {
-		// test id the unix/posix process is running with headless
-		if( config.autoLaunch && stdout.indexOf('--headless') < 0 ) {
-			// try to auto launch chrome
-			instance = spawn(chrome, config.chromeOptions, config.instanceOptions);
-			instance.unref();
-		}
+	chromeLauncher.launch({
+		startingUrl: config.url,
+		chromeFlags: config.chromeOptions
+	}).then(chrome => {
 
 		// Now let's take a screenshot
-		CDP(async (client) => {
+		CDP({port:chrome.port}, async (client) => {
 			const {Page, Emulation} = client;
 
 			await Page.enable();
-
-			const deviceMetrics = {
+			await Emulation.setDeviceMetricsOverride({
 				width: config.width,
 				height: config.height,
 				deviceScaleFactor: 0,
 				mobile: false,
 				fitWindow: false
-			};
-
-			await Emulation.setDeviceMetricsOverride(deviceMetrics);
+			});
 			await Emulation.setVisibleSize({width: config.width, height: config.height});
 
-			await Page.navigate({ url: config.url });
-
+			Page.navigate({ url: config.url });
 			Page.loadEventFired(async () => {
+				
+				await wait( config.delay );
 
-				let screenshot;
-				let buffer;
+				let screenshot = await Page.captureScreenshot({fromSurface: true});
+				let buffer = new Buffer(screenshot.data, 'base64');
+				file.writeFile(config.output, buffer, 'base64', function(err) {
+					client.close();
+				});
 
-				setTimeout(async () => {
-					screenshot = await Page.captureScreenshot({fromSurface: true});
-					buffer = new Buffer(screenshot.data, 'base64');
-					file.writeFile(config.output, buffer, 'base64', function(err) {
-						client.close();
-					});
-				}, config.delay);
+				chrome.kill().catch( (err) => {
+					console.error(err);
+				});
 
 			}); // Page.loadEventFired
-
-			if( config.autoLaunch ) {
-				setTimeout(async () => {
-					if(instance) {
-						instance.kill();
-					}
-					return true;
-				}, config.delay + 50);
-			}
-
 
 		}).on('error', (err) => {
 			console.error(err);
 		});
+
 	});
+
 };

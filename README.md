@@ -13,10 +13,11 @@ In the following example, Red Snapper will take a 300px by 600px screenshot of e
 const snap = require('red-snapper');
 
 snap({
-	url: 'http://example.com/',
+	url: 'https://github.com/',
 	width: 300,
 	height: 600,
-	delay: 5
+	delay: 500,
+	output: 'filename.png'
 });
 ```
 
@@ -24,6 +25,6 @@ snap({
 
 A few things I need to do:
 
-- [ ] Smarter Chrome process detection and launch
+- [x] Smarter Chrome process detection and launch
 - [ ] Have snapshot work as a stream instead of export directly to a file
 - [ ] Do screen recordings in addition to screenshots

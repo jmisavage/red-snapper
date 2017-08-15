@@ -1,9 +1,9 @@
 {
   "name": "red-snapper",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "repository": {
     "type": "git",
-    "url": "git@github.com:martinagency/red-snapper.git"
+    "url": "git@github.com:jmisavage/red-snapper.git"
   },
   "engines": {
     "node": ">=7"
@@ -19,6 +19,7 @@
   "author": "Jeremy Misavage",
   "license": "MIT",
   "dependencies": {
+    "chrome-launcher": "^0.5.0",
     "chrome-remote-interface": "^0.24.1",
     "minimist": "^1.2.0"
   }
