@@ -6,7 +6,7 @@ function wait(ms) {
 	return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-module.exports = function (options) {
+module.exports = async function (options) {
 
 	let config = Object.assign({
 		url: 'about:blank',
@@ -21,13 +21,15 @@ module.exports = function (options) {
 		]
 	}, options);
 
-	chromeLauncher.launch({
+	await chromeLauncher.launch({
 		startingUrl: config.url,
 		chromeFlags: config.chromeOptions
-	}).then(chrome => {
+	}).then(async chrome => {
 
-		// Now let's take a screenshot
-		CDP({port:chrome.port}, async (client) => {
+		try {
+			// talk to our instance
+			var client = await CDP({ port:chrome.port });
+
 			const {Page, Emulation} = client;
 
 			await Page.enable();
@@ -39,27 +41,25 @@ module.exports = function (options) {
 				fitWindow: false
 			});
 			await Emulation.setVisibleSize({width: config.width, height: config.height});
+			await Page.navigate({ url: config.url });
+			await Page.loadEventFired();
 
-			Page.navigate({ url: config.url });
-			Page.loadEventFired(async () => {
-				
+			// wait the specify time
+			if( config.delay ) {
 				await wait( config.delay );
+			}
 
-				let screenshot = await Page.captureScreenshot({fromSurface: true});
-				let buffer = new Buffer(screenshot.data, 'base64');
-				file.writeFile(config.output, buffer, 'base64', function(err) {
-					client.close();
-				});
-
-				chrome.kill().catch( (err) => {
-					console.error(err);
-				});
-
-			}); // Page.loadEventFired
-
-		}).on('error', (err) => {
+			let screenshot = await Page.captureScreenshot({fromSurface: true});
+			let buffer = new Buffer(screenshot.data, 'base64');
+			file.writeFile(config.output, buffer, 'base64', function(err) {
+				// done
+			});
+		} catch (err) {
 			console.error(err);
-		});
+		} finally {
+			await client.close();
+			await chrome.kill();
+		}
 
 	});
 
