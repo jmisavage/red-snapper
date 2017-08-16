@@ -11,20 +11,14 @@ In the following example, Red Snapper will take a 300px by 600px screenshot of e
 
 ```
 const snap = require('red-snapper');
+const fs = require('fs');
 
 snap({
 	url: 'https://github.com/',
 	width: 300,
 	height: 600,
-	delay: 500,
-	output: 'filename.png'
-});
+	delay: 500
+}).then((data) => {
+	fs.writeFileSync('screenshot.png', Buffer.from(data, 'base64'));
+});;
 ```
-
-## Roadmap
-
-A few things I need to do:
-
-- [x] Smarter Chrome process detection and launch
-- [ ] Have snapshot work as a stream instead of export directly to a file
-- [ ] Do screen recordings in addition to screenshots

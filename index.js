@@ -1,6 +1,5 @@
 const chromeLauncher = require('chrome-launcher');
 const CDP = require('chrome-remote-interface');
-const file = require('fs');
 
 function wait(ms) {
 	return new Promise(resolve => setTimeout(resolve, ms));
@@ -8,12 +7,13 @@ function wait(ms) {
 
 module.exports = async function (options) {
 
+	let buffer;
+
 	let config = Object.assign({
 		url: 'about:blank',
 		width: 1024,
 		height: 768,
 		delay: 0,
-		output: 'output.png',
 		chromeOptions: [
 			'--headless',
             '--hide-scrollbars',
@@ -50,10 +50,7 @@ module.exports = async function (options) {
 			}
 
 			let screenshot = await Page.captureScreenshot({fromSurface: true});
-			let buffer = new Buffer(screenshot.data, 'base64');
-			file.writeFile(config.output, buffer, 'base64', function(err) {
-				// done
-			});
+			buffer = new Buffer(screenshot.data, 'base64');
 		} catch (err) {
 			console.error(err);
 		} finally {
@@ -62,5 +59,7 @@ module.exports = async function (options) {
 		}
 
 	});
+
+	return buffer;
 
 };
