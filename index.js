@@ -7,7 +7,7 @@ function wait(ms) {
 
 module.exports = async function (options) {
 
-	let buffer, client;
+	let buffer, browser;
 
 	let config = Object.assign({
 		url: 'about:blank',
@@ -15,6 +15,7 @@ module.exports = async function (options) {
 		height: 768,
 		delay: 0,
 		format: 'png',
+		quality: 80,
 		chromeOptions: [
 			'--headless',
             '--hide-scrollbars',
@@ -29,9 +30,9 @@ module.exports = async function (options) {
 
 		try {
 			// talk to our instance
-			client = await CDP({ port:chrome.port });
+			browser = await CDP({ port:chrome.port });
 
-			const {Page, Emulation} = client;
+			const {Page, Emulation} = browser;
 
 			await Page.enable();
 			await Emulation.setDeviceMetricsOverride({
@@ -50,12 +51,22 @@ module.exports = async function (options) {
 				await wait( config.delay );
 			}
 
-			let screenshot = await Page.captureScreenshot({format: config.format, fromSurface: true});
+			// set JPG compression
+			let screenshotOptions = {
+				format: config.format,
+				fromSurface: true
+			}
+			if(config.format === 'jpeg') {
+				screenshotOptions.quality = config.quality;
+			}
+
+			// take a screenshot
+			let screenshot = await Page.captureScreenshot(screenshotOptions);
 			buffer = new Buffer(screenshot.data, 'base64');
 		} catch (err) {
 			console.error(err);
 		} finally {
-			await client.close();
+			await browser.close();
 			await chrome.kill();
 		}
 

@@ -32,10 +32,10 @@ snap({
 - **width** (_integer_) - Width of the browser. Defaults to 1024px. **(optional)**
 - **height** (_integer_) - Height of the browser. Defaults to 768px. **(optional)**
 - **delay** (_integer_) - Number of milliseconds to wait after page load before taking a screenshot. **(optional)**
-- **format** (_string_) - File format of the screenshot.  Acceptable values are "png" or "jpg".  Defaults to PNGs. **(optional)**
+- **format** (_string_) - File format of the screenshot.  Acceptable values are "png" or "jpeg".  Defaults to PNGs. **(optional)**
+- **quality** (_integer_) - Value between [0..100] and only used when format is jpeg.  Defaults to 80. **(optional)**
 
 ## Roadmap
 
 - Full page screenshots
 - Video recording of a page
-- Configurable JPG compression
