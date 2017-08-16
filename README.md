@@ -20,5 +20,7 @@ snap({
 	delay: 500
 }).then((data) => {
 	fs.writeFileSync('screenshot.png', Buffer.from(data, 'base64'));
-});;
+}).catch((error) => {
+	console.error(error);
+});
 ```
