@@ -7,7 +7,7 @@ headless Chrome and the Chrome Debugging Protocol.
 
 ## Usage
 
-In the following example, Red Snapper will take a 300px by 600px screenshot of github.com
+In the following example, Red Snapper will take a 300px by 600px screenshot of github.com.  If content is outside of that area it is cropped.
 
 ```JavaScript
 const snap = require('red-snapper');
@@ -33,3 +33,9 @@ snap({
 - **height** (_integer_) - Height of the browser. Defaults to 768px. **(optional)**
 - **delay** (_integer_) - Number of milliseconds to wait after page load before taking a screenshot. **(optional)**
 - **format** (_string_) - File format of the screenshot.  Acceptable values are "png" or "jpg".  Defaults to PNGs. **(optional)**
+
+## Roadmap
+
+- Full page screenshots
+- Video recording of a page
+- Configurable JPG compression
