@@ -7,13 +7,14 @@ function wait(ms) {
 
 module.exports = async function (options) {
 
-	let buffer;
+	let buffer, client;
 
 	let config = Object.assign({
 		url: 'about:blank',
 		width: 1024,
 		height: 768,
 		delay: 0,
+		format: 'png',
 		chromeOptions: [
 			'--headless',
             '--hide-scrollbars',
@@ -28,7 +29,7 @@ module.exports = async function (options) {
 
 		try {
 			// talk to our instance
-			var client = await CDP({ port:chrome.port });
+			client = await CDP({ port:chrome.port });
 
 			const {Page, Emulation} = client;
 
@@ -49,7 +50,7 @@ module.exports = async function (options) {
 				await wait( config.delay );
 			}
 
-			let screenshot = await Page.captureScreenshot({fromSurface: true});
+			let screenshot = await Page.captureScreenshot({format: config.format, fromSurface: true});
 			buffer = new Buffer(screenshot.data, 'base64');
 		} catch (err) {
 			console.error(err);
