@@ -9,7 +9,7 @@ headless Chrome and the Chrome Debugging Protocol.
 
 In the following example, Red Snapper will take a 300px by 600px screenshot of example.com
 
-```
+```JavaScript
 const snap = require('red-snapper');
 const fs = require('fs');
 
