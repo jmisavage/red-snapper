@@ -46,23 +46,35 @@ module.exports = async function (options) {
 			await Page.navigate({ url: config.url });
 			await Page.loadEventFired();
 
-			// wait the specify time
-			if( config.delay ) {
-				await wait( config.delay );
-			}
-
 			// set JPG compression
 			let screenshotOptions = {
 				format: config.format,
 				fromSurface: true
 			}
+
 			if(config.format === 'jpeg') {
 				screenshotOptions.quality = config.quality;
 			}
 
-			// take a screenshot
-			let screenshot = await Page.captureScreenshot(screenshotOptions);
-			buffer = new Buffer(screenshot.data, 'base64');
+			// wait specified times
+			if( config.delay && Array.isArray(config.delay) ) {
+				buffer = [];
+				
+				for(let i = 0; i < config.delay.length; i++) {
+					await wait( config.delay[i] );
+
+					// take a screenshot
+					let screenshot = await Page.captureScreenshot(screenshotOptions);
+					buffer.push( new Buffer(screenshot.data, 'base64') );
+				}
+			} else if( config.delay ) {
+				await wait( config.delay );
+
+				// take a screenshot
+				let screenshot = await Page.captureScreenshot(screenshotOptions);
+				buffer = new Buffer(screenshot.data, 'base64');
+			}
+
 		} catch (err) {
 			console.error(err);
 		} finally {
