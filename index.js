@@ -16,6 +16,7 @@ module.exports = async function (options) {
 		delay: 0,
 		format: 'png',
 		quality: 80,
+		fullPage: false,
 		chromeOptions: [
 			'--headless',
             '--hide-scrollbars',
@@ -32,7 +33,7 @@ module.exports = async function (options) {
 			// talk to our instance
 			browser = await CDP({ port:chrome.port });
 
-			const {Page, Emulation} = browser;
+			const {DOM, Page, Emulation} = browser;
 
 			await Page.enable();
 			await Emulation.setDeviceMetricsOverride({
@@ -59,7 +60,7 @@ module.exports = async function (options) {
 			// wait specified times
 			if( config.delay && Array.isArray(config.delay) ) {
 				buffer = [];
-				
+
 				for(let i = 0; i < config.delay.length; i++) {
 					await wait( config.delay[i] );
 
