@@ -34,6 +34,7 @@ snap({
 - **delay** (_integer_) - Number of milliseconds to wait after page load before taking a screenshot. **(optional)**
 - **format** (_string_) - File format of the screenshot.  Acceptable values are "png" or "jpeg".  Defaults to PNGs. **(optional)**
 - **quality** (_integer_) - Value between [0..100] and only used when format is jpeg.  Defaults to 80. **(optional)**
+- **fullPage** (_boolean_) - When set to true the height of the image will grow to expand the content of the page.  Defaults to false. **(optional)**
 
 ## Roadmap
 
