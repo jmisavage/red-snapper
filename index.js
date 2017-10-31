@@ -32,7 +32,7 @@ module.exports = async function (options) {
 			// talk to our instance
 			browser = await CDP({ port:chrome.port });
 
-			const {Page, Emulation} = browser;
+			const {DOM, Page, Emulation} = browser;
 
 			await Page.enable();
 			await Emulation.setDeviceMetricsOverride({
@@ -45,6 +45,27 @@ module.exports = async function (options) {
 			await Emulation.setVisibleSize({width: config.width, height: config.height});
 			await Page.navigate({ url: config.url });
 			await Page.loadEventFired();
+
+			if(config.fullPage) {
+				const {root: {nodeId: documentNodeId}} = await DOM.getDocument();
+				const {nodeId: bodyNodeId} = await DOM.querySelector({
+					selector: 'body',
+					nodeId: documentNodeId
+				});
+
+				const {model: {height}} = await DOM.getBoxModel({nodeId: bodyNodeId});
+				await Emulation.setVisibleSize({width: config.width, height: height});
+				await Emulation.setDeviceMetricsOverride({
+					width: config.width,
+					height:height,
+					screenWidth: config.width,
+					screenHeight: height,
+					deviceScaleFactor: 1,
+					fitWindow: false,
+					mobile: false
+				});
+				await Emulation.setPageScaleFactor({pageScaleFactor:1});
+			}
 
 			// wait the specify time
 			if( config.delay ) {
