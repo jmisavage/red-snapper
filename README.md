@@ -10,8 +10,8 @@ headless Chrome and the Chrome Debugging Protocol.
 In the following example, Red Snapper will take a 300px by 600px screenshot of github.com.  If content is outside of that area it is cropped.
 
 ```JavaScript
-const snap = require('red-snapper');
 const fs = require('fs');
+const snap = require('red-snapper');
 
 snap({
 	url: 'https://github.com/',
