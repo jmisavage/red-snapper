@@ -17,6 +17,7 @@ module.exports = async function (options) {
 		format: 'png',
 		quality: 80,
 		fullPage: false,
+		engine: 'chrome',
 		chromeOptions: [
 			'--headless',
             '--hide-scrollbars',
