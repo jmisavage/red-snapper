@@ -1,31 +1,31 @@
 {
-  "name": "red-snapper",
-  "version": "1.1.0",
-  "repository": {
-    "type": "git",
-    "url": "git@github.com:jmisavage/red-snapper.git"
-  },
-  "engines": {
-    "node": ">=7"
-  },
-  "description": "Take a screenshot of a webpage using headless Chrome",
-  "main": "index.js",
-  "scripts": {},
-  "keywords": [
-    "chrome",
-    "screenshot",
-    "snapshot"
-  ],
-  "author": "Jeremy Misavage",
-  "license": "MIT",
-  "dependencies": {
-    "chrome-launcher": "^0.10.5",
-    "chrome-remote-interface": "^0.26.1",
-    "minimist": "^1.2.0"
-  },
-  "devDependencies": {
-    "eslint": "^5.7.0",
-    "eslint-config-airbnb-base": "^13.1.0",
-    "eslint-plugin-import": "^2.14.0"
-  }
+    "name": "red-snapper",
+    "version": "1.1.0",
+    "repository": {
+        "type": "git",
+        "url": "git@github.com:jmisavage/red-snapper.git"
+    },
+    "engines": {
+        "node": ">=7"
+    },
+    "description": "Take a screenshot of a webpage using headless Chrome",
+    "main": "index.js",
+    "scripts": {},
+    "keywords": [
+        "chrome",
+        "screenshot",
+        "snapshot"
+    ],
+    "author": "Jeremy Misavage",
+    "license": "MIT",
+    "dependencies": {
+        "chrome-launcher": "^0.11.2",
+        "chrome-remote-interface": "^0.28.0",
+        "minimist": "^1.2.0"
+    },
+    "devDependencies": {
+        "eslint": "^6.5.1",
+        "eslint-config-airbnb-base": "^14.0.0",
+        "eslint-plugin-import": "^2.18.2"
+    }
 }
