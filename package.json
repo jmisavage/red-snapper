@@ -10,7 +10,9 @@
     },
     "description": "Take a screenshot of a webpage using headless Chrome",
     "main": "index.js",
-    "scripts": {},
+    "scripts": {
+        "test": "jest"
+    },
     "keywords": [
         "chrome",
         "screenshot",
@@ -26,6 +28,8 @@
     "devDependencies": {
         "eslint": "^6.5.1",
         "eslint-config-airbnb-base": "^14.0.0",
-        "eslint-plugin-import": "^2.18.2"
+        "eslint-config-prettier": "^6.4.0",
+        "eslint-plugin-import": "^2.18.2",
+        "jest": "^24.9.0"
     }
 }

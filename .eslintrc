@@ -4,10 +4,11 @@
         "es6": true,
         "node": true
     },
-    "extends": "airbnb-base",
+    "extends": ["airbnb-base", "prettier"],
     "rules": {
         "indent": [4, "tab", { "SwitchCase": 1, "VariableDeclarator": 1 }],
         "no-tabs": 0,
-        "allowIndentationTabs": true
+        "allowIndentationTabs": true,
+        "semicolons": true
     }
 }
