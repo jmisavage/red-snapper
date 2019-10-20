@@ -1,12 +1,11 @@
-# red-snapper
+# Red Snapper
 
 [![NPM Version][npm-image]][npm-url]
 [![NPM Downloads][downloads-image]][downloads-url]
 
-Red Snapper is a simple module that takes a screenshot of a webpage using
-headless Chrome and the Chrome Debugging Protocol.
+Red Snapper is a simple module that takes a screenshot of a webpage using headless Chrome and the Chrome Debugging Protocol.
 
-**Important:** This has only been tested on macOS Sierra and Ubuntu 16.04 LTS
+**Important:** This has only been tested on macOS Sierra, El Capitan, and Ubuntu 16.04 LTS
 
 ## Usage
 
