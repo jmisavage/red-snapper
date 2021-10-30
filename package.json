@@ -1,6 +1,6 @@
 {
     "name": "red-snapper",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "repository": {
         "type": "git",
         "url": "git@github.com:jmisavage/red-snapper.git"
@@ -21,15 +21,14 @@
     "author": "Jeremy Misavage",
     "license": "MIT",
     "dependencies": {
-        "chrome-launcher": "^0.11.2",
-        "chrome-remote-interface": "^0.28.0",
-        "minimist": "^1.2.0"
+        "chrome-launcher": "^0.14.1",
+        "chrome-remote-interface": "^0.31.0",
+        "minimist": "^1.2.5"
     },
     "devDependencies": {
-        "eslint": "^6.5.1",
-        "eslint-config-airbnb-base": "^14.0.0",
-        "eslint-config-prettier": "^6.4.0",
-        "eslint-plugin-import": "^2.18.2",
+        "eslint": "^6.8.0",
+        "eslint-config-airbnb-base": "^14.2.1",
+        "eslint-plugin-import": "^2.25.2",
         "jest": "^24.9.0"
     }
 }
