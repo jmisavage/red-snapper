@@ -5,7 +5,7 @@
 
 Red Snapper is a simple module that takes a screenshot of a webpage using headless Chrome and the Chrome Debugging Protocol.
 
-**Important:** This has only been tested on macOS Sierra, El Capitan, and Ubuntu 16.04 LTS
+**Important:** The latest version has been tested on macOS Catalina and Ubuntu 16.04 LTS
 
 ## Usage
 
