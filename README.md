@@ -16,15 +16,15 @@ const fs = require('fs');
 const snap = require('red-snapper');
 
 snap({
-	url: 'https://github.com/',
-	width: 300,
-	height: 600,
-	delay: 500,
-	format: 'png'
+    url: 'https://github.com/',
+    width: 300,
+    height: 600,
+    delay: 500,
+    format: 'png'
 }).then((data) => {
-	fs.writeFileSync('screenshot.png', Buffer.from(data, 'base64'));
+    fs.writeFileSync('screenshot.png', Buffer.from(data, 'base64'));
 }).catch((error) => {
-	console.error(error);
+    console.error(error);
 });
 ```
 
@@ -37,19 +37,19 @@ const fs = require('fs');
 const snap = require('red-snapper');
 
 snap({
-	url: 'https://github.com/',
-	width: 300,
-	height: 600,
-	delay: 500,
-	format: 'png',
+    url: 'https://github.com/',
+    width: 300,
+    height: 600,
+    delay: 500,
+    format: 'png',
     headers: {
         'x-custom-header': 'header value'
     },
     userAgent: 'Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)'
 }).then((data) => {
-	fs.writeFileSync('screenshot.png', Buffer.from(data, 'base64'));
+    fs.writeFileSync('screenshot.png', Buffer.from(data, 'base64'));
 }).catch((error) => {
-	console.error(error);
+    console.error(error);
 });
 ```
 
@@ -57,17 +57,17 @@ To take multiple screenshots specify an array of delays. The delays happen seque
 
 ```JavaScript
 snap({
-	url: 'https://github.com/',
-	width: 300,
-	height: 600,
-	delay: [1000,4000,3000],
-	format: 'png'
+    url: 'https://github.com/',
+    width: 300,
+    height: 600,
+    delay: [1000,4000,3000],
+    format: 'png'
 }).then((data) => {
-	for(let i = 0; i < data.length; i++) {
-		fs.writeFileSync('screenshot'+i+'.png', Buffer.from(data[i], 'base64'));
-	}
+    for(let i = 0; i < data.length; i++) {
+        fs.writeFileSync('screenshot'+i+'.png', Buffer.from(data[i], 'base64'));
+    }
 }).catch((error) => {
-	console.error(error);
+    console.error(error);
 });
 ```
 
