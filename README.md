@@ -16,15 +16,40 @@ const fs = require('fs');
 const snap = require('red-snapper');
 
 snap({
-	url: 'https://github.com/',
-	width: 300,
-	height: 600,
-	delay: 500,
-	format: 'png'
+    url: 'https://github.com/',
+    width: 300,
+    height: 600,
+    delay: 500,
+    format: 'png'
 }).then((data) => {
-	fs.writeFileSync('screenshot.png', Buffer.from(data, 'base64'));
+    fs.writeFileSync('screenshot.png', Buffer.from(data, 'base64'));
 }).catch((error) => {
-	console.error(error);
+    console.error(error);
+});
+```
+
+In some cases you may need to pass a custom header to bypass bot detection or to get the correct cache version on a page. Add the `headers` object and populate with the values you need. Warning headers and their values must be strings otherwise you will get a ProtocolError.
+
+To set the user agent string use the separate userAgent config parameter.
+
+```javascript
+const fs = require('fs');
+const snap = require('red-snapper');
+
+snap({
+    url: 'https://github.com/',
+    width: 300,
+    height: 600,
+    delay: 500,
+    format: 'png',
+    headers: {
+        'x-custom-header': 'header value'
+    },
+    userAgent: 'Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)'
+}).then((data) => {
+    fs.writeFileSync('screenshot.png', Buffer.from(data, 'base64'));
+}).catch((error) => {
+    console.error(error);
 });
 ```
 
@@ -32,17 +57,17 @@ To take multiple screenshots specify an array of delays. The delays happen seque
 
 ```JavaScript
 snap({
-	url: 'https://github.com/',
-	width: 300,
-	height: 600,
-	delay: [1000,4000,3000],
-	format: 'png'
+    url: 'https://github.com/',
+    width: 300,
+    height: 600,
+    delay: [1000,4000,3000],
+    format: 'png'
 }).then((data) => {
-	for(let i = 0; i < data.length; i++) {
-		fs.writeFileSync('screenshot'+i+'.png', Buffer.from(data[i], 'base64'));
-	}
+    for(let i = 0; i < data.length; i++) {
+        fs.writeFileSync('screenshot'+i+'.png', Buffer.from(data[i], 'base64'));
+    }
 }).catch((error) => {
-	console.error(error);
+    console.error(error);
 });
 ```
 
@@ -55,6 +80,8 @@ snap({
 -   **format** (_string_) - File format of the screenshot. Acceptable values are "png" or "jpeg". Defaults to PNGs. **(optional)**
 -   **quality** (_integer_) - Value between [0..100] and only used when format is jpeg. Defaults to 80. **(optional)**
 -   **fullPage** (_boolean_) - When set to true the height of the image will grow to expand the content of the page. Defaults to false. **(optional)**
+-   **headers** (_object_) - An object containing key-value pairs. **(optional)**
+-   **userAgent** (_string_) - A string representing the user agent to send to a website. **(optional)**
 
 [npm-image]: https://img.shields.io/npm/v/red-snapper.svg?style=flat
 [npm-url]: https://npmjs.org/package/red-snapper
