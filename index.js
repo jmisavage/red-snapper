@@ -20,6 +20,8 @@ module.exports = async function snapper(options) {
             fullPage: false,
             engine: 'chrome',
             chromeOptions: ['--headless', '--hide-scrollbars', '--disable-gpu'],
+            headers: null,
+            userAgent: null
         },
         options
     );
@@ -34,8 +36,9 @@ module.exports = async function snapper(options) {
                 // talk to our instance
                 browser = await CDP({ port: chrome.port });
 
-                const { Page, Emulation } = browser;
+                const { Network, Page, Emulation } = browser;
 
+                await Network.enable();
                 await Page.enable();
                 await Emulation.setDeviceMetricsOverride({
                     width: config.width,
@@ -48,6 +51,16 @@ module.exports = async function snapper(options) {
                     width: config.width,
                     height: config.height,
                 });
+
+                // Set extra network settings like custom headers, user agent, etc...
+                if (config.headers) {
+                    await Network.setExtraHTTPHeaders({ headers: config.headers });
+                }
+                if (config.userAgent) {
+                    await Network.setUserAgentOverride({ userAgent: config.userAgent });
+                }
+
+                // Load the page
                 await Page.navigate({ url: config.url });
                 await Page.loadEventFired();
 
