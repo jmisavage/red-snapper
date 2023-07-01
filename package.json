@@ -1,6 +1,6 @@
 {
     "name": "red-snapper",
-    "version": "1.4.0",
+    "version": "1.4.1",
     "repository": {
         "type": "git",
         "url": "git@github.com:jmisavage/red-snapper.git"
@@ -21,9 +21,9 @@
     "author": "Jeremy Misavage",
     "license": "MIT",
     "dependencies": {
-        "chrome-launcher": "^0.15.1",
-        "chrome-remote-interface": "^0.31.3",
-        "minimist": "^1.2.7"
+        "chrome-launcher": "^0.15.2",
+        "chrome-remote-interface": "^0.32.2",
+        "minimist": "^1.2.8"
     },
     "devDependencies": {
         "eslint": "^8.30.0",
