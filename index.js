@@ -1,11 +1,13 @@
-const chromeLauncher = require('chrome-launcher');
+import * as chromeLauncher from 'chrome-launcher';
+import { createRequire } from 'module';
+const require = createRequire(import.meta.url);
 const CDP = require('chrome-remote-interface');
 
 function wait(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-module.exports = async function snapper(options) {
+export async function snapper(options) {
     let buffer;
     let browser;
 

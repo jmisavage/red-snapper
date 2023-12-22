@@ -5,17 +5,18 @@
 
 Red Snapper is a simple module that takes a screenshot of a webpage using headless Chrome and the Chrome Debugging Protocol.
 
-**Important:** The latest version has been tested on macOS Catalina and Ubuntu 16.04 LTS
+## ES Modules
+Version 2.x switches from CommonJS to ES Modules. This was unavoidable due to dependencies being upgraded to only support ES6 Modules. If you still need CommonJS support then use the 1.x releases.
 
 ## Usage
 
-In the following example, Red Snapper will take a 300px by 600px screenshot of github.com. If content is outside of that area it is cropped.
+In the following example, Red Snapper will take a 300px by 600px screenshot of github.com. If any content is outside of that area it will be cropped.
 
 ```JavaScript
-const fs = require('fs');
-const snap = require('red-snapper');
+import fs from 'fs';
+import { snapper } from 'red-snapper';
 
-snap({
+snapper({
     url: 'https://github.com/',
     width: 300,
     height: 600,
@@ -28,15 +29,12 @@ snap({
 });
 ```
 
-In some cases you may need to pass a custom header to bypass bot detection or to get the correct cache version on a page. Add the `headers` object and populate with the values you need. Warning headers and their values must be strings otherwise you will get a ProtocolError.
+In some cases you may need to pass a custom header to bypass bot detection or to get the correct cache version of a page. Use the `headers` object and populate it with the values you need. Warning headers and their values must be strings otherwise you will get a ProtocolError.
 
 To set the user agent string use the separate userAgent config parameter.
 
 ```javascript
-const fs = require('fs');
-const snap = require('red-snapper');
-
-snap({
+snapper({
     url: 'https://github.com/',
     width: 300,
     height: 600,
@@ -53,10 +51,10 @@ snap({
 });
 ```
 
-To take multiple screenshots specify an array of delays. The delays happen sequentially. So for example if you want screenshots at 1 second, 5 seconds, and 8 seconds from a page load use an array with values of [1000,4000,3000]; The return object then becomes an array of buffers.
+When capturing multiple screenshots specify an array of delays. These delays will occur sequentially. For instance, if you wish to take screenshots at 1 second, 5 seconds, and 8 seconds after a page loads, create an array with values [1000, 4000, 3000]. The resulting object returned will be an array of buffers.
 
 ```JavaScript
-snap({
+snapper({
     url: 'https://github.com/',
     width: 300,
     height: 600,
